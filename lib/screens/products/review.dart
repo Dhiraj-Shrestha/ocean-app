@@ -26,102 +26,6 @@ class ReviewPage extends StatefulWidget {
 }
 
 class _ReviewPageState extends State<ReviewPage> {
-  //   return showDialog(
-  //       context: context,
-  //       builder: (context) {
-  //         return AlertDialog(
-  //           title: const Text('Give Product Review'),
-  //           content: Form(
-  //             key: _formKey,
-  //             child: Padding(
-  //               padding: const EdgeInsets.only(top: 7.0, bottom: 5.0),
-  //               child: FormBuilderTextField(
-  //                 name: 'Feedback',
-  //                 decoration: InputDecoration(
-  //                   labelText: 'Feedback',
-  //                   focusColor: appPrimaryColor,
-  //                   focusedBorder: OutlineInputBorder(
-  //                     borderSide:
-  //                         const BorderSide(width: 0.2, color: appPrimaryColor),
-  //                     borderRadius: BorderRadius.circular(12.0),
-  //                   ),
-  //                   fillColor: appPrimaryColor,
-  //                   border: OutlineInputBorder(
-  //                     borderRadius: BorderRadius.circular(12.0),
-  //                     borderSide: const BorderSide(),
-  //                   ),
-  //                 ),
-  //                 // validator:,
-
-  //                 // validator: FormBuilderValidators.compose([
-  //                 //   FormBuilderValidators.required(context,
-  //                 //       errorText: kDescriptionNullError),
-  //                 // ]),
-  //                 autovalidateMode: AutovalidateMode.disabled,
-  //                 maxLines: 3,
-  //                 maxLength: 100,
-  //                 keyboardType: TextInputType.multiline,
-  //                 controller: _textFieldController,
-  //               ),
-  //             ),
-  //           ),
-  //           // content: TextField(
-  //           //   onChanged: (value) {
-  //           //     setState(() {
-  //           //       valueText = value;
-  //           //     });
-  //           //   },
-  //           //   controller: _textFieldController,
-  //           //   decoration: InputDecoration(hintText: "Feedback"),
-  //           // ),
-  //           actions: <Widget>[
-  //             FlatButton(
-  //               color: Colors.grey,
-  //               textColor: Colors.white,
-  //               child: const Text('CANCEL'),
-  //               onPressed: () {
-  //                 setState(() {
-  //                   Navigator.pop(context);
-  //                 });
-  //               },
-  //             ),
-  //             FlatButton(
-  //               color: appPrimaryColor,
-  //               textColor: Colors.white,
-  //               child: const Text('Post'),
-  //               onPressed: () async {
-  //                 if (_formKey.currentState.validate()) {
-  //                   Map data = {
-  //                     "product_id": widget.mydata['id'],
-  //                     "comment": _textFieldController.text
-  //                   };
-  //                   // var response = await Api().postData(data, 'review');
-
-  //                   // var result = jsonDecode(response.body);
-  //                   // if (result['code'] == 200) {
-  //                   //   _textFieldController.text = '';
-  //                   //   FocusScopeNode currentFocus = FocusScope.of(context);
-  //                   //   if (!currentFocus.hasPrimaryFocus) {
-  //                   //     currentFocus.unfocus();
-  //                   //   }
-  //                   //   Navigator.pop(context);
-
-  //                   //   print("success");
-  //                   //   // showInSnackBar(context, 'Thank You for review');
-  //                   // } else {
-  //                   //   print("fail");
-  //                   // }
-  //                   // showInSnackBar(context, 'Thank You for review');
-
-  //                   // Navigator.pop(context);
-  //                 }
-  //               },
-  //             ),
-  //           ],
-  //         );
-  //       });
-  // }
-
   List<feed.Feedback> _listOfrelatedProducts = [];
   bool loading = false;
 
@@ -154,6 +58,8 @@ class _ReviewPageState extends State<ReviewPage> {
 
   @override
   void initState() {
+    print(widget.slug);
+    print(widget.type);
     _fetchRelatedReview();
     super.initState();
   }
@@ -168,20 +74,14 @@ class _ReviewPageState extends State<ReviewPage> {
       ),
       loading
           ? const CircularProgressIndicator()
-          :
-
-          // ListView.builder(itemBuilder: (conext, index) {
-          //   shr
-          //   return Text("hlw");
-          // }),
-
-          _listOfrelatedProducts.isEmpty
+          : _listOfrelatedProducts.isEmpty
               ? const Padding(
                   padding: EdgeInsets.only(top: 10.0),
                   child: Center(child: Text("No Review Yet")),
                 )
               : ListView.builder(
                   shrinkWrap: true,
+                  physics: const ClampingScrollPhysics(),
                   itemCount: _listOfrelatedProducts.length,
                   itemBuilder: (context, index) {
                     var mydata = _listOfrelatedProducts[index];
@@ -216,7 +116,7 @@ class _ReviewPageState extends State<ReviewPage> {
                     );
                   },
                 ),
-      _listOfrelatedProducts.length > 3
+      _listOfrelatedProducts.length > 4
           ? Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [

@@ -33,23 +33,20 @@ class _AllCourseCardItemState extends State<AllCourseCardItem> {
   final CartListBloc bloc = BlocProvider.getBloc<CartListBloc>();
   String setToken;
   // ignore: prefer_typing_uninitialized_variables
-  var userData;
-  bool loading = false;
+  // var userData;
+  bool redColor = false;
   FToast fToast;
   // final bool _isShown = true;
 
-  void _getUserInfo() async {
-    SharedPreferences localStorage = await SharedPreferences.getInstance();
-    var userJson = localStorage.getString('user');
-    var user = jsonDecode(userJson);
+  // void _getUserInfo() async {
+  //   SharedPreferences localStorage = await SharedPreferences.getInstance();
+  //   var userJson = localStorage.getString('user');
+  //   var user = jsonDecode(userJson);
 
-    userData = user;
-  }
+  //   userData = user;
+  // }
 
   Future _giveReview({String comment, int rating}) async {
-    setState(() {
-      loading = true;
-    });
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     String token = localStorage.getString('token');
 
@@ -61,29 +58,33 @@ class _AllCourseCardItemState extends State<AllCourseCardItem> {
 
     if (comment != null) {
       var data = {
-        "product_id": widget.allCourseItem.id,
+        "courseId": widget.allCourseItem.id,
         "rating": rating,
         "review": comment,
         "type": widget.allCourseItem.type,
-        "user_id": userData['id'],
       };
 
       var response = await CallApi().checkout('/feedback', setToken, data);
       var body = jsonDecode(response.body);
       if (body['status']) {
-        print('suxee');
+        setState(() {
+          redColor = false;
+        });
+
         // developer.log("$body");
         showToast(body['message']);
       } else {
+        setState(() {
+          redColor = false;
+        });
+        setState(() {
+          redColor = true;
+        });
+        showToast(body['Some thing went wrong']);
         // showToast(body['message']);
-        print('fail');
+
         //  developer.log("$body");
       }
-      setState(() {
-        loading = false;
-      });
-
-      Navigator.pop(context); // pop current page
     }
   }
 
@@ -92,12 +93,12 @@ class _AllCourseCardItemState extends State<AllCourseCardItem> {
       padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(25.0),
-        color: Colors.red,
+        color: redColor ? Colors.red : Colors.green,
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Icon(Icons.check, color: Colors.white),
+          Icon(redColor ? Icons.ac_unit : Icons.check, color: Colors.white),
           const SizedBox(
             width: 12.0,
           ),
@@ -118,6 +119,7 @@ class _AllCourseCardItemState extends State<AllCourseCardItem> {
 
   void _showRatingAppDialog() {
     final _ratingDialog = RatingDialog(
+      initialRating: 3,
       starColor: Colors.amber,
       title: Text('Rating and review', style: headingStyle),
       message: Text(
@@ -172,7 +174,7 @@ class _AllCourseCardItemState extends State<AllCourseCardItem> {
 
   @override
   void initState() {
-    _getUserInfo();
+    // _getUserInfo();
     colorCheck();
     fToast = FToast();
     fToast.init(context);

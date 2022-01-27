@@ -36,8 +36,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
 
   _showFlashMessage(msg, status) {
     final snackbar = SnackBar(
-      content: Text(msg,
-          style: TextStyle(color: status ? Colors.red : Colors.white)),
+      content: Text(msg, style: const TextStyle(color: Colors.white)),
       action: SnackBarAction(
         label: 'Close',
         onPressed: () {

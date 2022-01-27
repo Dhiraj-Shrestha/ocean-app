@@ -73,7 +73,7 @@ class _UserAllCourses extends State<UserAllCourses> {
           ? Center(child: circularProgressIndicator())
           : GridView.builder(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3, childAspectRatio: 3 / 7),
+                  crossAxisCount: 3, childAspectRatio: 3 / 7.2),
               itemCount: _listOfUserCourses.length,
               itemBuilder: (BuildContext ctx, index) {
                 final courseItem = _listOfUserCourses[index];
