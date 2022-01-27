@@ -28,7 +28,7 @@ class _UserAllCourses extends State<UserAllCourses> {
   }
 
   // ignore: prefer_void_to_null
-  Future<Null> _fetchUserAllCourses() async {
+  Future _fetchUserAllCourses() async {
     setState(() {
       loading = true;
     });
@@ -60,24 +60,26 @@ class _UserAllCourses extends State<UserAllCourses> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: appPrimaryColor,
-          centerTitle: true,
-          elevation: 0.7,
-          title: const Text(
-            "Buyed Courses",
-            style: TextStyle(fontSize: 17.0),
-          ),
+      appBar: AppBar(
+        backgroundColor: appPrimaryColor,
+        centerTitle: true,
+        elevation: 0.7,
+        title: const Text(
+          "Buyed Courses",
+          style: TextStyle(fontSize: 17.0),
         ),
-        body: loading
-            ? Center(child: circularProgressIndicator())
-            : GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3, childAspectRatio: 3 / 6),
-                itemCount: _listOfUserCourses.length,
-                itemBuilder: (BuildContext ctx, index) {
-                  final courseItem = _listOfUserCourses[index];
-                  return AllCourseCardItem(allCourseItem: courseItem);
-                }));
+      ),
+      body: loading
+          ? Center(child: circularProgressIndicator())
+          : GridView.builder(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3, childAspectRatio: 3 / 7),
+              itemCount: _listOfUserCourses.length,
+              itemBuilder: (BuildContext ctx, index) {
+                final courseItem = _listOfUserCourses[index];
+                return AllCourseCardItem(allCourseItem: courseItem);
+              },
+            ),
+    );
   }
 }

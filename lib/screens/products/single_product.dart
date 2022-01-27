@@ -16,6 +16,7 @@ import 'package:ocean_publication/screens/cart/cart_page.dart';
 import 'package:expandable/expandable.dart';
 import 'package:ocean_publication/screens/products/related_products/related_product_heading.dart';
 import 'package:ocean_publication/screens/products/related_products/related_products.dart';
+import 'package:ocean_publication/screens/products/review.dart';
 import 'package:ocean_publication/screens/products/single_product_tapbar.dart';
 import 'package:ocean_publication/screens/search/search_item.dart';
 import 'package:ocean_publication/widgets/circular_progress_indicator.dart';
@@ -428,42 +429,6 @@ class _SingleProductPageState extends State<SingleProductPage> {
                   )),
 
                   const SizedBox(height: 6.0),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 5.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'Reviews',
-                          style: TextStyle(
-                              height: 1.5,
-                              color: appPrimaryColor,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        Row(
-                          children: [
-                            buildRatingStart(libraryItems.rating),
-                            Row(
-                              children: [
-                                Text(
-                                  "(${libraryItems.rating})",
-                                  style: const TextStyle(
-                                      fontSize: 11, color: Colors.grey),
-                                ),
-                                const Text(
-                                  "Reviews",
-                                  style: TextStyle(
-                                      fontSize: 11,
-                                      color: Colors.grey,
-                                      fontFamily: 'Montserrat'),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
 
                   const SizedBox(height: 6.0),
                   libraryItems.type == 'package'
@@ -516,6 +481,58 @@ class _SingleProductPageState extends State<SingleProductPage> {
                           ),
                         )
                       : const SizedBox(),
+
+                  ExpandablePanel(
+                    theme: const ExpandableThemeData(
+                      iconColor: appPrimaryColor,
+                      expandIcon: Icons.arrow_left,
+                    ),
+                    header: Padding(
+                      padding: const EdgeInsets.only(left: 5.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Reviews',
+                            style: TextStyle(
+                                height: 1.5,
+                                color: appPrimaryColor,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          Row(
+                            children: [
+                              buildRatingStart(libraryItems.rating),
+                              Row(
+                                children: [
+                                  Text(
+                                    "(${libraryItems.rating})",
+                                    style: const TextStyle(
+                                        fontSize: 11, color: Colors.grey),
+                                  ),
+                                  const Text(
+                                    "Reviews",
+                                    style: TextStyle(
+                                        fontSize: 11,
+                                        color: Colors.grey,
+                                        fontFamily: 'Montserrat'),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    collapsed: const Text(
+                      '',
+                      softWrap: true,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    expanded: ReviewPage(
+                        type: widget.libraryItems.type,
+                        slug: widget.libraryItems.slug),
+                  ),
 
                   // related Product Heading
                   RelatedProductTitle(),

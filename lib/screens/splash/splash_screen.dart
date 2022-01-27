@@ -3,8 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:ocean_publication/routes/router_constant.dart';
 // import 'package:new_project_work/ui_pages/forgot_password.dart';
-import 'package:ocean_publication/screens/landing_page/landing_page.dart';
-import 'package:ocean_publication/screens/splash/welcome.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {

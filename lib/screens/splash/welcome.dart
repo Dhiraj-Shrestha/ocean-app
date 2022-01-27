@@ -1,88 +1,54 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:ocean_publication/constants/app_colors.dart';
-import 'package:ocean_publication/screens/landing_page/landing_page.dart';
-import 'package:ocean_publication/models/splash_screen/data.dart';
+import 'package:ocean_publication/routes/router_constant.dart';
+import 'package:ocean_publication/screens/splash/onboard_design.dart';
 
-class Welcome extends StatefulWidget {
-  const Welcome({Key key}) : super(key: key);
+class OnBoardPage extends StatefulWidget {
   @override
-  _WelcomeState createState() => _WelcomeState();
+  _OnBoardPageState createState() => _OnBoardPageState();
 }
 
-class _WelcomeState extends State<Welcome> {
-  List<SliderModel> mySLides = <SliderModel>[];
-  int slideIndex = 0;
-  PageController controller;
-
-  Widget _buildPageIndicator(bool isCurrentPage) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 2.0),
-      height: isCurrentPage ? 10.0 : 6.0,
-      width: isCurrentPage ? 10.0 : 6.0,
-      decoration: BoxDecoration(
-        color: isCurrentPage ? Colors.grey : Colors.grey[300],
-        borderRadius: BorderRadius.circular(12),
-      ),
-    );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    mySLides = getSlides();
-    controller = PageController();
-  }
-
+class _OnBoardPageState extends State<OnBoardPage> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-          gradient:
-              LinearGradient(colors: [Color(0xff3C8CE7), Color(0xff00EAFF)])),
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        body: SizedBox(
-          height: MediaQuery.of(context).size.height - 100,
-          child: PageView(
-            controller: controller,
-            onPageChanged: (index) {
-              setState(() {
-                slideIndex = index;
-              });
-            },
-            children: <Widget>[
-              for (SliderModel slide in mySLides)
-                SlideTile(
-                  imagePath: slide.getImageAssetPath(),
-                  title: slide.getTitle(),
-                  desc: slide.getDesc(),
-                ),
-            ],
-          ),
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: PageView.builder(
+        controller: controller,
+        onPageChanged: (value) {
+          setState(() {
+            slideIndex = value;
+          });
+        },
+        itemCount: onBoardData.length,
+        itemBuilder: (context, index) => OnBoardDesign(
+          image: onBoardData[index]['image'],
+          title: onBoardData[index]['title'],
+          details: onBoardData[index]['details'],
         ),
-        bottomSheet: slideIndex != 2
-            ? Container(
-                margin: const EdgeInsets.symmetric(vertical: 16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    // ignore: deprecated_member_use
-                    FlatButton(
-                      onPressed: () {
-                        controller.animateToPage(2,
-                            duration: const Duration(milliseconds: 400),
-                            curve: Curves.linear);
-                      },
-                      splashColor: Colors.blue[50],
-                      child: const Text(
-                        "SKIP",
-                        style: TextStyle(
-                            color: appPrimaryColor,
-                            fontWeight: FontWeight.w600),
-                      ),
+      ),
+      bottomSheet: slideIndex != onBoardData.length - 1
+          ? Container(
+              margin: EdgeInsets.symmetric(vertical: 16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  FlatButton(
+                    onPressed: () {
+                      controller.animateToPage(onBoardData.length - 1,
+                          duration: Duration(milliseconds: 400),
+                          curve: Curves.linear);
+                    },
+                    splashColor: Colors.blue[50],
+                    child: Text(
+                      "SKIP",
+                      style: TextStyle(
+                          color: Color(0xFF0074E4),
+                          fontWeight: FontWeight.w600),
                     ),
-                    Row(
+                  ),
+                  Container(
+                    child: Row(
                       children: [
                         for (int i = 0; i < 3; i++)
                           i == slideIndex
@@ -90,82 +56,82 @@ class _WelcomeState extends State<Welcome> {
                               : _buildPageIndicator(false),
                       ],
                     ),
-                    // ignore: deprecated_member_use
-                    FlatButton(
-                      onPressed: () {
-                        // print("this is slideIndex: $slideIndex");
-                        controller.animateToPage(slideIndex + 1,
-                            duration: const Duration(milliseconds: 500),
-                            curve: Curves.linear);
-                      },
-                      splashColor: Colors.blue[50],
-                      child: const Text(
-                        "NEXT",
-                        style: TextStyle(
-                            color: appPrimaryColor,
-                            fontWeight: FontWeight.w600),
-                      ),
-                    ),
-                  ],
-                ),
-              )
-            : InkWell(
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const LandingPage()));
-                },
-                child: Container(
-                  height: Platform.isIOS ? 70 : 60,
-                  color: appPrimaryColor,
-                  alignment: Alignment.center,
-                  child: const Text(
-                    "GET STARTED NOW",
-                    style: TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.w600),
                   ),
+                  FlatButton(
+                    onPressed: () {
+                      print("this is slideIndex: $slideIndex");
+                      controller.animateToPage(slideIndex + 1,
+                          duration: Duration(milliseconds: 500),
+                          curve: Curves.linear);
+                    },
+                    splashColor: Colors.blue[50],
+                    child: Text(
+                      "NEXT",
+                      style: TextStyle(
+                          color: Color(0xFF0074E4),
+                          fontWeight: FontWeight.w600),
+                    ),
+                  ),
+                ],
+              ),
+            )
+          : InkWell(
+              onTap: () {
+                Navigator.pushReplacementNamed(context, landingRoute);
+              },
+              child: Container(
+                height: MediaQuery.of(context).size.height / 6,
+                color: appPrimaryColor,
+                alignment: Alignment.center,
+                child: Text(
+                  "Get Started Now",
+                  style: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.bold),
                 ),
               ),
+            ),
+    );
+  }
+
+  List<Map<String, String>> onBoardData = [
+    {
+      "image": "assets/images/1.png",
+      "title": "Search",
+      "details":
+          "The only thing you absolutely have to know is the location of the library",
+    },
+    {
+      "image": "assets/images/2.png",
+      "title": "Order",
+      "details":
+          "Read the best books first, or you may not have a chance to read them to all."
+    },
+    {
+      "image": "assets/images/1.png",
+      "title": "Reading",
+      "details":
+          "Reading is a conversation. All books talk. But a good book listens as well",
+    },
+  ];
+
+  int slideIndex = 0;
+  PageController controller;
+
+  Widget _buildPageIndicator(bool isCurrentPage) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 2.0),
+      height: 6.0,
+      width: isCurrentPage ? 10.0 : 7.0,
+      decoration: BoxDecoration(
+        color: isCurrentPage ? appPrimaryColor : Colors.grey[300],
       ),
     );
   }
-}
-
-// ignore: must_be_immutable
-class SlideTile extends StatelessWidget {
-  String imagePath, title, desc;
-
-  SlideTile(
-      {Key key,
-      @required this.imagePath,
-      @required this.title,
-      @required this.desc})
-      : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      alignment: Alignment.center,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Image.asset(imagePath),
-          const SizedBox(
-            height: 40,
-          ),
-          Text(
-            title,
-            textAlign: TextAlign.center,
-            style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 20),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Text(desc,
-              textAlign: TextAlign.center,
-              style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 14))
-        ],
-      ),
-    );
+  void initState() {
+    super.initState();
+
+    controller = PageController();
   }
 }

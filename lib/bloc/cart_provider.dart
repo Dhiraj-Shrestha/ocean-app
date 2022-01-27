@@ -21,6 +21,7 @@ class CartProvider {
       }
     } else {
       items.add(item);
+      isPresent = false;
     }
 
     return items;

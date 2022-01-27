@@ -44,7 +44,7 @@ class _MyAppState extends State<MyApp> {
           debugShowCheckedModeBanner: false,
           theme: ThemeData(fontFamily: 'Montserrat'),
           onGenerateRoute: Routers.onGenerateRoute,
-          initialRoute: landingRoute),
+          initialRoute: splashRoute),
       // home: ForgotPasswordForm(),
     );
   }

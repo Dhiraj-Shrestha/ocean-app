@@ -44,6 +44,7 @@ dependencies:
   url_launcher: ^6.0.17
   flutter_svg: ^1.0.0
   bloc_pattern: ^3.0.0
+  flutter_form_builder: ^7.0.0
   rxdart: ^0.27.3
   dio: ^4.0.4
   flutter_icons: ^1.1.0
@@ -54,6 +55,7 @@ dependencies:
   form_field_validator: ^1.1.0
   fluttertoast: ^8.0.8
   multilevel_drawer: ^2.0.0
+  rating_dialog: ^2.0.3
   logger: ^1.1.0
   expandable: ^5.0.1
   file_picker: ^4.3.0

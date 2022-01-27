@@ -1,8 +1,11 @@
 // ignore_for_file: avoid_unnecessary_containers, deprecated_member_use
 
+import 'dart:convert';
+
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:ocean_publication/api/api.dart';
 import 'package:ocean_publication/bloc/cart_list_bloc.dart';
 import 'package:ocean_publication/constants/app_colors.dart';
 import 'package:ocean_publication/models/products/api_data.dart';
@@ -11,6 +14,8 @@ import 'package:ocean_publication/screens/coming_soon/coming_soon.dart';
 import 'package:ocean_publication/screens/video_player/network.dart';
 
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:rating_dialog/rating_dialog.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:video_player/video_player.dart';
 
@@ -33,6 +38,55 @@ class _AllCourseCardItemState extends State<AllCourseCardItem> {
   FToast fToast;
   // final bool _isShown = true;
 
+  void _getUserInfo() async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    var userJson = localStorage.getString('user');
+    var user = jsonDecode(userJson);
+
+    userData = user;
+  }
+
+  Future _giveReview({String comment, int rating}) async {
+    setState(() {
+      loading = true;
+    });
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    String token = localStorage.getString('token');
+
+    if (token != null || token != '') {
+      setState(() {
+        setToken = token;
+      });
+    }
+
+    if (comment != null) {
+      var data = {
+        "product_id": widget.allCourseItem.id,
+        "rating": rating,
+        "review": comment,
+        "type": widget.allCourseItem.type,
+        "user_id": userData['id'],
+      };
+
+      var response = await CallApi().checkout('/feedback', setToken, data);
+      var body = jsonDecode(response.body);
+      if (body['status']) {
+        print('suxee');
+        // developer.log("$body");
+        showToast(body['message']);
+      } else {
+        // showToast(body['message']);
+        print('fail');
+        //  developer.log("$body");
+      }
+      setState(() {
+        loading = false;
+      });
+
+      Navigator.pop(context); // pop current page
+    }
+  }
+
   showToast(msg) {
     Widget toast = Container(
       padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
@@ -47,7 +101,10 @@ class _AllCourseCardItemState extends State<AllCourseCardItem> {
           const SizedBox(
             width: 12.0,
           ),
-          Text(msg, style: const TextStyle(color: Colors.white)),
+          Text(msg,
+              style: const TextStyle(
+                color: Colors.white,
+              )),
         ],
       ),
     );
@@ -56,6 +113,35 @@ class _AllCourseCardItemState extends State<AllCourseCardItem> {
       child: toast,
       gravity: ToastGravity.BOTTOM,
       toastDuration: const Duration(seconds: 2),
+    );
+  }
+
+  void _showRatingAppDialog() {
+    final _ratingDialog = RatingDialog(
+      starColor: Colors.amber,
+      title: Text('Rating and review', style: headingStyle),
+      message: Text(
+        'Hope you like it. Please provide your feedback',
+        style: greyStyle,
+      ),
+      commentHint: 'Provide your feedback here',
+      submitButtonText: 'Submit',
+      onCancelled: () => print('cancelled'),
+      onSubmitted: (response) {
+        _giveReview(comment: response.comment, rating: response.rating.toInt());
+
+        // if (response.rating < 3.0) {
+        //   print('response.rating: ${response.rating}');
+        // } else {
+        //   Container();
+        // }
+      },
+    );
+
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (context) => _ratingDialog,
     );
   }
 
@@ -86,10 +172,11 @@ class _AllCourseCardItemState extends State<AllCourseCardItem> {
 
   @override
   void initState() {
-    super.initState();
+    _getUserInfo();
     colorCheck();
     fToast = FToast();
     fToast.init(context);
+    super.initState();
   }
 
   Future openBrowserURL({
@@ -190,7 +277,6 @@ class _AllCourseCardItemState extends State<AllCourseCardItem> {
                                       borderRadius: BorderRadius.circular(5.0),
                                       side: BorderSide(color: colorValue)))),
                           onPressed: () {
-                          
                             navigateFunction();
                           },
                         ),
@@ -199,6 +285,38 @@ class _AllCourseCardItemState extends State<AllCourseCardItem> {
                   ),
                 ),
               ),
+              const SizedBox(
+                height: 5.0,
+              ),
+              SizedBox(
+                height: 30,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                  child: Expanded(
+                    child: TextButton(
+                      child: Center(
+                        child: Text(
+                          'Review'.toUpperCase(),
+                          style: const TextStyle(
+                              fontSize: 12, fontWeight: FontWeight.w800),
+                        ),
+                      ),
+                      style: ButtonStyle(
+                          foregroundColor:
+                              MaterialStateProperty.all<Color>(appPrimaryColor),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5.0),
+                                      side: const BorderSide(
+                                          color: appPrimaryColor)))),
+                      onPressed: () {
+                        _showRatingAppDialog();
+                      },
+                    ),
+                  ),
+                ),
+              )
             ],
           ),
         ),

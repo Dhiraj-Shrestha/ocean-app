@@ -15,3 +15,14 @@ const kPrimaryGradientColor = LinearGradient(
 );
 
 const IconData delete = IconData(0xe1b9, fontFamily: 'MaterialIcons');
+
+TextStyle greyStyle =
+     const TextStyle(color: Colors.grey, fontSize: 15, letterSpacing: 0.8);
+
+TextStyle headingStyle =
+    const TextStyle(fontSize: 20.0, fontWeight: FontWeight.w700);
+TextStyle largeTextStyle = const TextStyle(
+    fontSize: 25.0, fontWeight: FontWeight.w700, color: appPrimaryColor);
+
+TextStyle subHeadingStyle =
+    const TextStyle(fontSize: 15.0, fontWeight: FontWeight.w600);

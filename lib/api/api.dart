@@ -36,6 +36,11 @@ class CallApi {
 
 //------------ end get all packages-----------------
 
+  getAllRelatedReview(type, slug) async {
+    var fullUrl = 'https://oceanpublication.com.np/api/$type/$slug';
+    return await http.get(Uri.parse(fullUrl), headers: _setHeaders());
+  }
+
   getAllRelatedProducts(type, slug) async {
     var fullUrl = 'https://oceanpublication.com.np/api/$type/$slug';
     return await http.get(Uri.parse(fullUrl), headers: _setHeaders());
@@ -169,6 +174,8 @@ class CallApi {
     return await http.get(Uri.parse(fullUrl),
         headers: _setHeadersWithToken(token));
   }
+
+  
 
   Future<OrganizationModel> getOrganizationData() async {
     String fullUrl = _url + '/settings';
