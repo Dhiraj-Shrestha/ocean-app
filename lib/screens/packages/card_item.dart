@@ -1,6 +1,5 @@
 // ignore_for_file: avoid_unnecessary_containers, deprecated_member_use
 import 'dart:convert';
-import 'dart:developer' as developer;
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter/material.dart';
 import 'package:ocean_publication/api/api.dart';

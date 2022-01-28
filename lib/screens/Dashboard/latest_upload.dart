@@ -13,12 +13,12 @@ class LatestUploads extends StatefulWidget {
 }
 
 class _LatestUploadsState extends State<LatestUploads> {
-  List<LibraryItems> _book = [];
-  List<LibraryItems> _video = [];
+  final List<LibraryItems> _book = [];
+  final List<LibraryItems> _video = [];
 
   List<LibraryItems> _combine = [];
 
-  Future combine() {
+  combine() {
     _combine = _book.take(5).toList() + _video.take(5).toList();
   }
 
@@ -41,7 +41,7 @@ class _LatestUploadsState extends State<LatestUploads> {
     }
   }
 
-  Future<Null> fetchVideos() async {
+  Future fetchVideos() async {
     var response = await CallApi().viewAllBooks('/videos');
     var data = jsonDecode(response.body);
     // var response = await CallApi().viewAllBooks("/view-all-books");

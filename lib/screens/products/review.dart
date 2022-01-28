@@ -1,15 +1,12 @@
 import 'dart:convert';
-import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:ocean_publication/api/api.dart';
 import 'package:ocean_publication/constants/app_colors.dart';
 
 import 'package:ocean_publication/models/products/single_page.dart' as feed;
-import 'package:ocean_publication/routes/router_constant.dart';
 import 'package:ocean_publication/screens/products/related_products/view_all_review.dart';
 import 'package:ocean_publication/widgets/rating.dart';
-
-import 'package:rating_dialog/rating_dialog.dart';
 
 class ReviewPage extends StatefulWidget {
   final String type;
@@ -35,7 +32,7 @@ class _ReviewPageState extends State<ReviewPage> {
       loading = true;
     });
 
-    if (widget.type != '' && widget.slug != '') {
+
       var response =
           await CallApi().getAllRelatedReview(widget.type, widget.slug);
       var data = jsonDecode(response.body);
@@ -53,13 +50,11 @@ class _ReviewPageState extends State<ReviewPage> {
           });
         }
       }
-    }
+
   }
 
   @override
   void initState() {
-    print(widget.slug);
-    print(widget.type);
     _fetchRelatedReview();
     super.initState();
   }
@@ -77,7 +72,9 @@ class _ReviewPageState extends State<ReviewPage> {
           : _listOfrelatedProducts.isEmpty
               ? const Padding(
                   padding: EdgeInsets.only(top: 10.0),
-                  child: Center(child: Text("No Review Yet")),
+                  child: Center(
+                    child: Text("No Review Yet"),
+                  ),
                 )
               : ListView.builder(
                   shrinkWrap: true,

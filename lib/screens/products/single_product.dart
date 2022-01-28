@@ -82,7 +82,6 @@ class _SingleProductPageState extends State<SingleProductPage> {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     var token = localStorage.getString('token');
     var userInfo = localStorage.getString('user');
-    final List<LibraryItems> _listOfUserCourses = [];
 
     if (token != '' || token != null) {
       setState(() {

@@ -186,6 +186,7 @@ class Child {
       };
 }
 
+// ignore: constant_identifier_names
 enum Status { ACTIVE }
 
 final statusValues = EnumValues({"Active": Status.ACTIVE});
@@ -269,9 +270,7 @@ class EnumValues<T> {
   EnumValues(this.map);
 
   Map<T, String> get reverse {
-    if (reverseMap == null) {
-      reverseMap = map.map((k, v) => new MapEntry(v, k));
-    }
+    reverseMap ??= map.map((k, v) => MapEntry(v, k));
     return reverseMap;
   }
 }

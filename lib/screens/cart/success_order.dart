@@ -2,7 +2,6 @@ import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter/material.dart';
 import 'package:ocean_publication/bloc/cart_list_bloc.dart';
 import 'package:ocean_publication/constants/app_colors.dart';
-import 'package:ocean_publication/models/order/order.dart';
 import 'package:ocean_publication/screens/history/order_history.dart';
 import 'package:ocean_publication/screens/landing_page/landing_page.dart';
 

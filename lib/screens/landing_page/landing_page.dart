@@ -178,12 +178,11 @@ class _LandingPageState extends State<LandingPage> {
           ? SizedBox(
               width: MediaQuery.of(context).size.width - 70,
               child: Drawer(
-                child: Column(
-                  children: [
-                    Expanded(
+                child: CustomScrollView(
+                  slivers: [
+                    SliverFillRemaining(
+                      hasScrollBody: false,
                       child: Column(
-                        // Important: Remove any padding from the ListView.
-
                         children: <Widget>[
                           UserAccountsDrawerHeader(
                             decoration: const BoxDecoration(
@@ -259,240 +258,265 @@ class _LandingPageState extends State<LandingPage> {
                                           }
                                         })),
                           ),
-                          createDrawerItem(
-                              icon: Icons.home,
-                              text: 'Home',
-                              isSelected: selectedIndex == 0,
-                              onTap: () {
-                                setState(() {
-                                  selectedIndex = 0;
-                                });
-                              }),
-                          createDrawerItem(
-                              icon: Icons.integration_instructions,
-                              text: 'About Us',
-                              isSelected: selectedIndex == 1,
-                              onTap: () {
-                                setState(() {
-                                  selectedIndex = 1;
-                                });
+                          Expanded(
+                            child: Column(
+                              // Important: Remove any padding from the ListView.
 
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => AboutUs()));
-                              }),
-                          createDrawerItem(
-                              icon: Icons.person,
-                              text: 'Author',
-                              isSelected: selectedIndex == 2,
-                              onTap: () {
-                                setState(() {
-                                  selectedIndex = 2;
-                                });
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => Author()));
-                              }),
-                          createDrawerItem(
-                              icon: Icons.person_add_alt_sharp,
-                              text: 'Distributor',
-                              isSelected: selectedIndex == 3,
-                              onTap: () {
-                                setState(() {
-                                  selectedIndex = 3;
-                                });
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => Distributer()));
-                              }),
-                          createDrawerItem(
-                              icon: Icons.track_changes,
-                              text: 'Training and Seminars',
-                              isSelected: selectedIndex == 4,
-                              onTap: () {
-                                setState(() {
-                                  selectedIndex = 4;
-                                });
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            TrainingSeminar()));
-                              }),
-                          createDrawerItem(
-                              icon: Icons.login,
-                              text: userData != null ? 'Go Dashboard' : 'Login',
-                              isSelected: selectedIndex == 6,
-                              onTap: () {
-                                setState(() {
-                                  selectedIndex = 6;
-                                });
-                                userData != null
-                                    ? Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                WelcomeDashboardPage()))
-                                    : Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => LoginPage()));
-                              }),
-                          const Divider(),
-                          FutureBuilder<OrganizationModel>(
-                              future: _organizationModel,
-                              builder: (context, snapshot) {
-                                if (snapshot.hasData) {
-                                  var now = DateTime.now();
-                                  var formatter = DateFormat('yyyy');
-                                  String formattedDate = formatter.format(now);
-                                  var mydata = snapshot.data.data;
-                                  var arr = mydata.address.split('  ');
-                                  return Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 10.0, top: 3.0, bottom: 10.0),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Padding(
+                              children: <Widget>[
+                                createDrawerItem(
+                                    icon: Icons.home,
+                                    text: 'Home',
+                                    isSelected: selectedIndex == 0,
+                                    onTap: () {
+                                      setState(() {
+                                        selectedIndex = 0;
+                                      });
+                                    }),
+                                createDrawerItem(
+                                    icon: Icons.integration_instructions,
+                                    text: 'About Us',
+                                    isSelected: selectedIndex == 1,
+                                    onTap: () {
+                                      setState(() {
+                                        selectedIndex = 1;
+                                      });
+
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => AboutUs()));
+                                    }),
+                                createDrawerItem(
+                                    icon: Icons.person,
+                                    text: 'Author',
+                                    isSelected: selectedIndex == 2,
+                                    onTap: () {
+                                      setState(() {
+                                        selectedIndex = 2;
+                                      });
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => Author()));
+                                    }),
+                                createDrawerItem(
+                                    icon: Icons.person_add_alt_sharp,
+                                    text: 'Distributor',
+                                    isSelected: selectedIndex == 3,
+                                    onTap: () {
+                                      setState(() {
+                                        selectedIndex = 3;
+                                      });
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  Distributer()));
+                                    }),
+                                createDrawerItem(
+                                    icon: Icons.track_changes,
+                                    text: 'Training and Seminars',
+                                    isSelected: selectedIndex == 4,
+                                    onTap: () {
+                                      setState(() {
+                                        selectedIndex = 4;
+                                      });
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  TrainingSeminar()));
+                                    }),
+                                createDrawerItem(
+                                    icon: Icons.login,
+                                    text: userData != null
+                                        ? 'Go Dashboard'
+                                        : 'Login',
+                                    isSelected: selectedIndex == 6,
+                                    onTap: () {
+                                      setState(() {
+                                        selectedIndex = 6;
+                                      });
+                                      userData != null
+                                          ? Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      WelcomeDashboardPage()))
+                                          : Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      LoginPage()));
+                                    }),
+                                const Divider(),
+                                FutureBuilder<OrganizationModel>(
+                                    future: _organizationModel,
+                                    builder: (context, snapshot) {
+                                      if (snapshot.hasData) {
+                                        var now = DateTime.now();
+                                        var formatter = DateFormat('yyyy');
+                                        String formattedDate =
+                                            formatter.format(now);
+                                        var mydata = snapshot.data.data;
+                                        var arr = mydata.address.split('  ');
+                                        return Padding(
                                           padding: const EdgeInsets.only(
-                                              left: 28.0, bottom: 15.0),
-                                          child: Text(
-                                            mydata.siteDescription.toString(),
-                                            style: const TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.black),
-                                          ),
-                                        ),
-                                        Row(
-                                          children: [
-                                            const Icon(Icons.person,
-                                                color: appSecondaryColor),
-                                            const SizedBox(width: 10.0),
-                                            Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                    arr[0].toString() +
-                                                        ' ' +
-                                                        arr[1].toString(),
-                                                    style: const TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.w100)),
-                                                Text(arr[2].toString(),
-                                                    style: const TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.w200)),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                        const SizedBox(height: 10.0),
-                                        Row(
-                                          children: [
-                                            const Icon(Icons.phone,
-                                                color: appSecondaryColor),
-                                            const SizedBox(width: 10.0),
-                                            Text(
-                                                mydata.primaryPhone.toString() +
-                                                    ', ' +
-                                                    mydata.secondaryPhone
-                                                        .toString(),
-                                                style: const TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.w100))
-                                          ],
-                                        ),
-                                        const SizedBox(height: 10.0),
-                                        Row(
-                                          children: [
-                                            const Icon(Icons.contact_mail,
-                                                color: appSecondaryColor),
-                                            const SizedBox(width: 10.0),
-                                            Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                    mydata.primaryEmail
-                                                        .toString(),
-                                                    style: const TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.w100)),
-                                                const SizedBox(width: 5.0),
-                                                Text(
-                                                    mydata.secondaryEmail
-                                                        .toString(),
-                                                    style: const TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.w100)),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                        Center(
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                vertical: 12.0, horizontal: 0),
-                                            child: Column(
-                                              children: [
-                                                Text(
-                                                  'Copyright @ ' +
-                                                      (mydata.siteTitle
-                                                              .toString() +
-                                                          ' ' +
-                                                          formattedDate
-                                                              .toString()),
+                                              left: 10.0,
+                                              top: 3.0,
+                                              bottom: 10.0),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 28.0, bottom: 15.0),
+                                                child: Text(
+                                                  mydata.siteDescription
+                                                      .toString(),
                                                   style: const TextStyle(
-                                                      fontSize: 12),
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.black),
                                                 ),
-                                              ],
-                                            ),
+                                              ),
+                                              Row(
+                                                children: [
+                                                  const Icon(Icons.person,
+                                                      color: appSecondaryColor),
+                                                  const SizedBox(width: 10.0),
+                                                  Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                          arr[0].toString() +
+                                                              ' ' +
+                                                              arr[1].toString(),
+                                                          style: const TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w100)),
+                                                      Text(arr[2].toString(),
+                                                          style: const TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w200)),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                              const SizedBox(height: 10.0),
+                                              Row(
+                                                children: [
+                                                  const Icon(Icons.phone,
+                                                      color: appSecondaryColor),
+                                                  const SizedBox(width: 10.0),
+                                                  Text(
+                                                      mydata.primaryPhone
+                                                              .toString() +
+                                                          ', ' +
+                                                          mydata.secondaryPhone
+                                                              .toString(),
+                                                      style: const TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w100))
+                                                ],
+                                              ),
+                                              const SizedBox(height: 10.0),
+                                              Row(
+                                                children: [
+                                                  const Icon(Icons.contact_mail,
+                                                      color: appSecondaryColor),
+                                                  const SizedBox(width: 10.0),
+                                                  Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                          mydata.primaryEmail
+                                                              .toString(),
+                                                          style: const TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w100)),
+                                                      const SizedBox(
+                                                          width: 5.0),
+                                                      Text(
+                                                          mydata.secondaryEmail
+                                                              .toString(),
+                                                          style: const TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w100)),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                              Center(
+                                                child: Padding(
+                                                  padding: const EdgeInsets
+                                                          .symmetric(
+                                                      vertical: 12.0,
+                                                      horizontal: 0),
+                                                  child: Column(
+                                                    children: [
+                                                      Text(
+                                                        'Copyright @ ' +
+                                                            (mydata.siteTitle
+                                                                    .toString() +
+                                                                ' ' +
+                                                                formattedDate
+                                                                    .toString()),
+                                                        style: const TextStyle(
+                                                            fontSize: 12),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
                                           ),
-                                        ),
-                                      ],
+                                        );
+                                      } else if (snapshot.hasError) {
+                                        return const Text(
+                                            'Cannot load at this time');
+                                      } else {
+                                        return const Center(
+                                          child: CircularProgressIndicator(),
+                                        );
+                                      }
+                                    }),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Powered By: ',
+                                  style: TextStyle(color: Colors.grey.shade400),
+                                ),
+                                InkWell(
+                                  onTap: _launchURL,
+                                  child: const Text(
+                                    'AllStar Technology',
+                                    style: TextStyle(
+                                      color: appPrimaryColor,
                                     ),
-                                  );
-                                } else if (snapshot.hasError) {
-                                  return const Text('Cannot load at this time');
-                                } else {
-                                  return const Center(
-                                    child: CircularProgressIndicator(),
-                                  );
-                                }
-                              }),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         ],
                       ),
                     ),
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Powered By: ',
-                              style: TextStyle(color: Colors.grey.shade400),
-                            ),
-                            InkWell(
-                              onTap: _launchURL,
-                              child: const Text(
-                                'AllStar Technology',
-                                style: TextStyle(
-                                  color: appPrimaryColor,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    )
                   ],
                 ),
               ),

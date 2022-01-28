@@ -22,8 +22,11 @@ import 'package:video_player/video_player.dart';
 class AllCourseCardItem extends StatefulWidget {
   // ignore: prefer_const_constructors_in_immutables
   final LibraryItems allCourseItem;
+
   // ignore: prefer_const_constructors_in_immutables
-  AllCourseCardItem({Key key, @required this.allCourseItem}) : super(key: key);
+  AllCourseCardItem(
+      {Key key, @required this.allCourseItem,})
+      : super(key: key);
 
   @override
   _AllCourseCardItemState createState() => _AllCourseCardItemState();
@@ -32,19 +35,14 @@ class AllCourseCardItem extends StatefulWidget {
 class _AllCourseCardItemState extends State<AllCourseCardItem> {
   final CartListBloc bloc = BlocProvider.getBloc<CartListBloc>();
   String setToken;
+
+  bool reviewed;
   // ignore: prefer_typing_uninitialized_variables
   // var userData;
   bool redColor = false;
   FToast fToast;
+
   // final bool _isShown = true;
-
-  // void _getUserInfo() async {
-  //   SharedPreferences localStorage = await SharedPreferences.getInstance();
-  //   var userJson = localStorage.getString('user');
-  //   var user = jsonDecode(userJson);
-
-  //   userData = user;
-  // }
 
   Future _giveReview({String comment, int rating}) async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
@@ -88,6 +86,8 @@ class _AllCourseCardItemState extends State<AllCourseCardItem> {
     }
   }
 
+
+
   showToast(msg) {
     Widget toast = Container(
       padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
@@ -119,7 +119,7 @@ class _AllCourseCardItemState extends State<AllCourseCardItem> {
 
   void _showRatingAppDialog() {
     final _ratingDialog = RatingDialog(
-      initialRating: 3,
+      initialRating: 1,
       starColor: Colors.amber,
       title: Text('Rating and review', style: headingStyle),
       message: Text(
@@ -128,7 +128,7 @@ class _AllCourseCardItemState extends State<AllCourseCardItem> {
       ),
       commentHint: 'Provide your feedback here',
       submitButtonText: 'Submit',
-      onCancelled: () => print('cancelled'),
+      onCancelled: () => null,
       onSubmitted: (response) {
         _giveReview(comment: response.comment, rating: response.rating.toInt());
 
@@ -220,8 +220,7 @@ class _AllCourseCardItemState extends State<AllCourseCardItem> {
                       'https://oceanpublication.com.np/upload/book/image/1626433730viber_image_2021-07-16_16-43-40-581.jpg',
                     );
                   },
-                  height: 150,
-                  width: 150,
+                  width: double.infinity,
                   fit: BoxFit.fitWidth,
                 ),
               ),
@@ -294,28 +293,32 @@ class _AllCourseCardItemState extends State<AllCourseCardItem> {
                 height: 30,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 2.0),
-                  child: Expanded(
-                    child: TextButton(
-                      child: Center(
-                        child: Text(
-                          'Review'.toUpperCase(),
-                          style: const TextStyle(
-                              fontSize: 12, fontWeight: FontWeight.w800),
-                        ),
-                      ),
-                      style: ButtonStyle(
-                          foregroundColor:
-                              MaterialStateProperty.all<Color>(appPrimaryColor),
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: TextButton(
+                          child: Center(
+                            child: Text(
+                              'Review'.toUpperCase(),
+                              style: const TextStyle(
+                                  fontSize: 12, fontWeight: FontWeight.w800),
+                            ),
+                          ),
+                          style: ButtonStyle(
+                              foregroundColor: MaterialStateProperty.all<Color>(
+                                  appPrimaryColor),
+                              shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
                                   RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(5.0),
                                       side: const BorderSide(
                                           color: appPrimaryColor)))),
-                      onPressed: () {
-                        _showRatingAppDialog();
-                      },
-                    ),
+                          onPressed: () {
+                            _showRatingAppDialog();
+                          },
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               )

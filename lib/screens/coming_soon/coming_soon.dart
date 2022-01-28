@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:ocean_publication/api/api.dart';
 import 'package:ocean_publication/constants/app_colors.dart';
 import 'package:ocean_publication/models/products/api_data.dart';
@@ -45,13 +44,10 @@ class _CoursesUnderPackageState extends State<CoursesUnderPackage> {
     var response = await CallApi()
         .viewAllCourseUnderPackage(widget.courseUnderPackage.slug, setToken);
     var data = jsonDecode(response.body);
-    print(data);
 
     // developer.log("$data");
     if (data['status']) {
       var allcourses = data['data']['courses_assign'];
-      print(allcourses);
-      print('value up');
       if (allcourses != null) {
         setState(() {
           for (Map i in allcourses) {
@@ -71,7 +67,7 @@ class _CoursesUnderPackageState extends State<CoursesUnderPackage> {
         centerTitle: true,
         elevation: 0.7,
         title: Text(
-          widget.courseUnderPackage.slug,
+          widget.courseUnderPackage.title,
           maxLines: 1,
           style: const TextStyle(fontSize: 17.0),
         ),
@@ -79,13 +75,17 @@ class _CoursesUnderPackageState extends State<CoursesUnderPackage> {
       body: loading
           ? Center(child: circularProgressIndicator())
           : GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3, childAspectRatio: 3 / 6),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                childAspectRatio: MediaQuery.of(context).size.width /
+                    (MediaQuery.of(context).size.height / 1.4),
+              ),
               itemCount: _listOfUserCourses.length,
               itemBuilder: (BuildContext ctx, index) {
                 final courseItem = _listOfUserCourses[index];
                 return AllCourseCardItem(allCourseItem: courseItem);
-              }),
+              },
+            ),
     );
   }
 }

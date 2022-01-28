@@ -15,7 +15,7 @@ class Routers {
       case splashRoute:
         return MaterialPageRoute(builder: (_) => const SplashScreen());
       case welcomeRoute:
-        return MaterialPageRoute(builder: (_) => OnBoardPage());
+        return MaterialPageRoute(builder: (_) => const OnBoardPage());
       case landingRoute:
         return MaterialPageRoute(builder: (_) => const LandingPage());
 

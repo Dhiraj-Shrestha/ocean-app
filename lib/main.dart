@@ -3,12 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:ocean_publication/bloc/cart_list_bloc.dart';
 import 'package:ocean_publication/routes/router.dart';
 import 'package:ocean_publication/routes/router_constant.dart';
-import 'package:ocean_publication/screens/auth/forgot_password/forget_password.dart';
-import 'package:ocean_publication/screens/auth/forgot_password/forgot_password_form.dart';
-import 'package:ocean_publication/screens/landing_page/landing_page.dart';
-import 'package:ocean_publication/screens/splash/splash_screen.dart';
-import 'package:ocean_publication/screens/splash/welcome.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/services.dart';
 
 void main() {

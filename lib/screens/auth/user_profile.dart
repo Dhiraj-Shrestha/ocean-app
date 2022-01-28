@@ -92,10 +92,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     MaterialPageRoute(
                         builder: (context) => const LatestUploads()));
               }),
-          ProfileMenu(
-              icon: "assets/images/settings.svg",
-              text: "Settings",
-              press: () {}),
+          // ProfileMenu(
+          //     icon: "assets/images/settings.svg",
+          //     text: "Settings",
+          //     press: () {}),
           ProfileMenu(
               icon: "assets/images/cart_icon.svg",
               text: "Orders",

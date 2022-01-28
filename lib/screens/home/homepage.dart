@@ -3,7 +3,6 @@ import 'dart:convert';
 
 import 'package:another_carousel_pro/another_carousel_pro.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:ocean_publication/api/api.dart';
 import 'package:ocean_publication/constants/app_colors.dart';
 import 'package:ocean_publication/models/products/api_data.dart';
@@ -31,7 +30,6 @@ class _HomePageState extends State<HomePage> {
   final _listExtraBanners = [];
   final List<LibraryItems> _listOfPackages = [];
   var loading = false;
-  SwiperController scollBarController;
   @override
   void initState() {
     _fetchExtraBanners();
@@ -98,7 +96,6 @@ class _HomePageState extends State<HomePage> {
           for (Map i in banners) {
             _listExtraBanners.add(i['image']);
           }
-          scollBarController = SwiperController();
           loading = false;
         });
       }
@@ -160,28 +157,9 @@ class _HomePageState extends State<HomePage> {
           BannerHeading(),
           //banner page
 
-          // SizedBox(
-          //   height: 200,
-          //   child: loading
-          //       ? Center(child: circularProgressIndicator())
-          //       : Swiper.children(
-          //           autoplay: true,
-          //           viewportFraction: 0.7,
-          //           scale: 0.8,
-          //           pagination: const SwiperPagination(
-          //               margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 30.0),
-          //               builder: DotSwiperPaginationBuilder(
-          //                   color: Colors.white30,
-          //                   activeColor: Colors.white,
-          //                   size: 20.0,
-          //                   activeSize: 20.0)),
-          //           children: _listExtraBanners,
-          //         ),
-          // ),
           BannerPage(
             banners: _listExtraBanners,
             loading: loading,
-            scollBarController: scollBarController,
           ),
           // package heading
           PackageHeading(),

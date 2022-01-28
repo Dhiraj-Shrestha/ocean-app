@@ -4,6 +4,8 @@ import 'package:ocean_publication/routes/router_constant.dart';
 import 'package:ocean_publication/screens/splash/onboard_design.dart';
 
 class OnBoardPage extends StatefulWidget {
+  const OnBoardPage({Key key}) : super(key: key);
+
   @override
   _OnBoardPageState createState() => _OnBoardPageState();
 }
@@ -29,43 +31,38 @@ class _OnBoardPageState extends State<OnBoardPage> {
       ),
       bottomSheet: slideIndex != onBoardData.length - 1
           ? Container(
-              margin: EdgeInsets.symmetric(vertical: 16),
+              margin: const EdgeInsets.symmetric(vertical: 16),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  FlatButton(
+                  TextButton(
                     onPressed: () {
                       controller.animateToPage(onBoardData.length - 1,
-                          duration: Duration(milliseconds: 400),
+                          duration: const Duration(milliseconds: 400),
                           curve: Curves.linear);
                     },
-                    splashColor: Colors.blue[50],
-                    child: Text(
+                    child: const Text(
                       "SKIP",
                       style: TextStyle(
                           color: Color(0xFF0074E4),
                           fontWeight: FontWeight.w600),
                     ),
                   ),
-                  Container(
-                    child: Row(
-                      children: [
-                        for (int i = 0; i < 3; i++)
-                          i == slideIndex
-                              ? _buildPageIndicator(true)
-                              : _buildPageIndicator(false),
-                      ],
-                    ),
+                  Row(
+                    children: [
+                      for (int i = 0; i < 3; i++)
+                        i == slideIndex
+                            ? _buildPageIndicator(true)
+                            : _buildPageIndicator(false),
+                    ],
                   ),
-                  FlatButton(
+                  TextButton(
                     onPressed: () {
-                      print("this is slideIndex: $slideIndex");
                       controller.animateToPage(slideIndex + 1,
-                          duration: Duration(milliseconds: 500),
+                          duration: const Duration(milliseconds: 500),
                           curve: Curves.linear);
                     },
-                    splashColor: Colors.blue[50],
-                    child: Text(
+                    child: const Text(
                       "NEXT",
                       style: TextStyle(
                           color: Color(0xFF0074E4),
@@ -83,7 +80,7 @@ class _OnBoardPageState extends State<OnBoardPage> {
                 height: MediaQuery.of(context).size.height / 6,
                 color: appPrimaryColor,
                 alignment: Alignment.center,
-                child: Text(
+                child: const Text(
                   "Get Started Now",
                   style: TextStyle(
                       color: Colors.white, fontWeight: FontWeight.bold),

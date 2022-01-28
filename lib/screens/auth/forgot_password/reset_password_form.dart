@@ -23,6 +23,7 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
   bool _oldPasswordVisible = false;
   bool _passwordConfirmVisible = false;
   final _formKey = GlobalKey<FormState>();
+  // ignore: prefer_typing_uninitialized_variables
   var userData;
   void _getUserInfo() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();

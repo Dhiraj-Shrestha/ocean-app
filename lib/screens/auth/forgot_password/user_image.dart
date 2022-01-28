@@ -9,13 +9,12 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-import 'dart:io' as io;
-
 import 'package:image_picker/image_picker.dart';
-import 'package:ocean_publication/api/api.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfilePic extends StatefulWidget {
+  // ignore: prefer_typing_uninitialized_variables
   final userData;
 
   // ignore: prefer_const_constructors_in_immutables
@@ -34,6 +33,14 @@ class _ProfilePicState extends State<ProfilePic> {
 
   dynamic pickImageError;
   XFile _imageFile;
+
+  @override
+  void initState() {
+    super.initState();
+    fToast = FToast();
+    fToast.init(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -133,21 +140,17 @@ class _ProfilePicState extends State<ProfilePic> {
       });
     }
     if (_imageFile != null) {
-      var data = {
-        "image": _imageFile,
-      };
-
       var response = await patchImage("/student-image/update", _imageFile.path);
 
       if (response.statusCode == 200) {
-        print('success');
+        Navigator.pop(context);
+
         setState(() {});
         // developer.log("$body");
         // showToast(body['message']);
       } else {
         // showToast(body['message']);
         //  developer.log("$body");
-        print('fail');
       }
       setState(() {
         loading = false;
@@ -196,25 +199,29 @@ class _ProfilePicState extends State<ProfilePic> {
     });
     var streamedResponse = await request.send();
     var response = await http.Response.fromStream(streamedResponse);
-    // final respStr = await response.stream.bytesToString();
-    var image = json.decode(response.body);
-    var body = jsonDecode(response.body);
-    var user = localStorage.getString('user');
-    print(body);
-    print(body['image']);
-    var userData = json.decode(user);
-    userData['image'] =
-        'https://oceanpublication.com.np/upload/user/1643096522image_picker4128171688242498306.jpg';
 
-    // widget.userData['image'] = image['image'];
-    // localStorage.setString('user', json.encode(widget.userData));
+    if (response.statusCode == 200) {
+      // final respStr = await response.stream.bytesToString();
+      var body = jsonDecode(response.body);
 
-    setState(() {
-      localStorage.setString('user', jsonEncode(userData));
-    });
-    print(localStorage.getString('user'));
+      var user = localStorage.getString('user');
+      var userData = json.decode(user); 
+      userData['image'] = body['data']['image'];
 
-    return response;
+      showToast(body['message'].toString());
+
+      // widget.userData['image'] = image['image'];
+      // localStorage.setString('user', json.encode(widget.userData));
+
+      setState(() {
+        localStorage.setString('user', jsonEncode(userData));
+      });
+      // print(localStorage.getString('user'));
+
+      return response;
+    } else {
+      return null;
+    }
   }
 
   Future<http.StreamedResponse> ptchImage(String url, String filePath) async {
