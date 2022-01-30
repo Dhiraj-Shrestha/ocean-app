@@ -75,10 +75,9 @@ class _CoursesUnderPackageState extends State<CoursesUnderPackage> {
       body: loading
           ? Center(child: circularProgressIndicator())
           : GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 3,
-                childAspectRatio: MediaQuery.of(context).size.width /
-                    (MediaQuery.of(context).size.height / 1.4),
+                childAspectRatio: 3 / 7.1,
               ),
               itemCount: _listOfUserCourses.length,
               itemBuilder: (BuildContext ctx, index) {
