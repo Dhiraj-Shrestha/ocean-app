@@ -234,95 +234,66 @@ class _CartPageState extends State<CartPage> {
                 child: Container(
               child: CartBody(items),
             )),
-            bottomNavigationBar: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                totalAmount(items),
-                Container(
-                  width: MediaQuery.of(context).size.width / 1.5,
-                  padding: const EdgeInsets.symmetric(vertical: 20),
-                  child: Center(
-                    child: FlatButton(
-                      onPressed: () {
-                        setState(() {
-                          payment_method = true;
-                        });
-                        var totalAmount = returnTotalAmount(items);
+            bottomNavigationBar: returnTotalAmount(items) == 0
+                ? const SizedBox()
+                : Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      totalAmount(items),
+                      Container(
+                        width: MediaQuery.of(context).size.width / 1.5,
+                        padding: const EdgeInsets.symmetric(vertical: 20),
+                        child: Center(
+                          child: FlatButton(
+                            onPressed: () {
+                              setState(() {
+                                payment_method = true;
+                              });
+                              var totalAmount = returnTotalAmount(items);
 
-                        setToken != null
-                            ? payment(
-                                items: items,
-                                totalAmount: totalAmount.toString())
-                            : Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => LoginPage()));
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 5, horizontal: 5.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.asset('assets/images/esewa.png',
-                                width: 30, fit: BoxFit.fitWidth),
-                            const SizedBox(
-                              width: 10,
+                              setToken != null
+                                  ? payment(
+                                      items: items,
+                                      totalAmount: totalAmount.toString())
+                                  : Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => LoginPage()));
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 5, horizontal: 5.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Image.asset('assets/images/esewa.png',
+                                      width: 30, fit: BoxFit.fitWidth),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  const Text(
+                                    "Proceed to Pay",
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 14.0,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              ),
                             ),
-                            const Text(
-                              "Proceed to Pay",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 14.0,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ],
+                            textColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                                side: const BorderSide(
+                                    color: Colors.green,
+                                    width: 1,
+                                    style: BorderStyle.solid),
+                                borderRadius: BorderRadius.circular(50)),
+                          ),
                         ),
                       ),
-                      textColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                          side: const BorderSide(
-                              color: Colors.green,
-                              width: 1,
-                              style: BorderStyle.solid),
-                          borderRadius: BorderRadius.circular(50)),
-                    ),
+                    ],
                   ),
-                ),
-                // Container(
-                //   margin: const EdgeInsets.only(right: 25),
-                //   padding: const EdgeInsets.all(20),
-                //   decoration: BoxDecoration(
-                //       color: appPrimaryColor,
-                //       borderRadius: BorderRadius.circular(15)),
-                //   child: Row(
-                //     mainAxisAlignment: MainAxisAlignment.center,
-                //     children: [
-                //       InkWell(
-                //         onTap: () {
-                //           setToken != null
-                //               ? _checkOut(items)
-                //               : Navigator.push(
-                //                   context,
-                //                   MaterialPageRoute(
-                //                       builder: (context) => LoginPage()));
-                //         },
-                //         child: loading
-                //             ? Center(child: smallCircularProgressIndicator())
-                //             : const Text(
-                //                 "Checkout",
-                //                 style: TextStyle(
-                //                     fontWeight: FontWeight.w900,
-                //                     fontSize: 18,
-                //                     color: Colors.white),
-                //               ),
-                //       ),
-                //     ],
-                //   ),
-                // )
-              ],
-            ),
           );
         }
         return Center(child: circularProgressIndicator());

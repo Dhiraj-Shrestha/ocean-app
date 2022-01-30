@@ -186,12 +186,18 @@ class _SingleProductPageState extends State<SingleProductPage> {
               return Center(
                 child: InkWell(
                   onTap: () {
-                    developer.log('cart page goes here...');
-                    if (length > 0) {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => CartPage()));
+                    if (userData == null) {
+                      Navigator.pushReplacement(context,
+                          MaterialPageRoute(builder: (context) => LoginPage()));
                     } else {
-                      return;
+                      if (length > 0) {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => CartPage()));
+                      } else {
+                        return;
+                      }
                     }
                   },
                   child: Badge(
@@ -471,10 +477,10 @@ class _SingleProductPageState extends State<SingleProductPage> {
                       : const SizedBox(),
 
                   ReviewPage(
-                      type: widget.libraryItems.type,
-                      slug: widget.libraryItems.slug,
-                      rating: widget.libraryItems.rating,
-                      ),
+                    type: widget.libraryItems.type,
+                    slug: widget.libraryItems.slug,
+                    rating: widget.libraryItems.rating,
+                  ),
 
                   // related Product Heading
                   RelatedProductTitle(),

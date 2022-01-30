@@ -1,11 +1,14 @@
 import 'dart:convert';
 
+import 'package:badges/badges.dart';
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter/material.dart';
 import 'package:ocean_publication/api/api.dart';
 import 'package:ocean_publication/bloc/cart_list_bloc.dart';
 import 'package:ocean_publication/constants/app_colors.dart';
+import 'package:ocean_publication/models/products/api_data.dart';
 import 'package:ocean_publication/screens/Dashboard/latest_upload.dart';
+import 'package:ocean_publication/screens/cart/cart_page.dart';
 import 'package:ocean_publication/screens/dashboard/allcourses/all_courses.dart';
 import 'package:ocean_publication/screens/auth/user_profile.dart';
 import 'package:ocean_publication/screens/history/order_history.dart';
@@ -81,6 +84,37 @@ class _WelcomeDashboardPageState extends State<WelcomeDashboardPage> {
         title: const Text('Dashboard'),
         centerTitle: true,
         elevation: 0,
+        actions: [
+          StreamBuilder<List<LibraryItems>>(
+            stream: bloc.listStream,
+            builder: (context, snapshot) {
+              List<LibraryItems> items = snapshot.data;
+              int length = items != null ? items.length : 0;
+              return Center(
+                child: InkWell(
+                  onTap: () {
+                    if (length > 0) {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => CartPage()));
+                    } else {
+                      return;
+                    }
+                  },
+                  child: Badge(
+                    badgeColor: Colors.white,
+                    badgeContent: Text(length.toString(),
+                        style: const TextStyle(color: Colors.black)),
+                    animationType: BadgeAnimationType.scale,
+                    animationDuration: const Duration(milliseconds: 300),
+                    child: const Icon(Icons.shopping_cart),
+                  ),
+                ),
+              );
+            },
+          ),
+          const SizedBox(width: 5.0),
+          const SizedBox(width: 20.0 / 2)
+        ],
       ),
       body: Column(
         children: [
