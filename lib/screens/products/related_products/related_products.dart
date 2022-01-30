@@ -62,7 +62,6 @@ class _RelatedProductsState extends State<RelatedProducts> {
   @override
   Widget build(BuildContext context) {
     if (_listOfrelatedProducts.isEmpty) {
-   
       return Container(
         height: 350,
         width: 410,
@@ -72,7 +71,7 @@ class _RelatedProductsState extends State<RelatedProducts> {
                     fontFamily: 'Montserrat', fontWeight: FontWeight.w600))),
       );
     }
- 
+
     return Container(
       height: 267,
       child: loading
@@ -92,7 +91,6 @@ class _RelatedProductsState extends State<RelatedProducts> {
                                 builder: (context) =>
                                     SingleProductPage(libraryItems: item)));
                       },
-                   
                       child: Container(
                         width: 152,
                         child: Card(

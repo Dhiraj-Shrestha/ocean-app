@@ -331,19 +331,8 @@ class _SingleProductPageState extends State<SingleProductPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Row(
-                              children: [
+                              children: const [
                                 Padding(
-                                  padding:
-                                      const EdgeInsets.only(top: 4, right: 4),
-                                  child: Text(
-                                    "(${libraryItems.rating})",
-                                    style: const TextStyle(
-                                        fontSize: 13,
-                                        color: Colors.grey,
-                                        fontWeight: FontWeight.w800),
-                                  ),
-                                ),
-                                const Padding(
                                   padding: EdgeInsets.only(top: 4, right: 5),
                                   child: Text(
                                     "Reviews",
@@ -481,57 +470,11 @@ class _SingleProductPageState extends State<SingleProductPage> {
                         )
                       : const SizedBox(),
 
-                  ExpandablePanel(
-                    theme: const ExpandableThemeData(
-                      iconColor: appPrimaryColor,
-                      expandIcon: Icons.arrow_left,
-                    ),
-                    header: Padding(
-                      padding: const EdgeInsets.only(left: 5.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            'Reviews',
-                            style: TextStyle(
-                                height: 1.5,
-                                color: appPrimaryColor,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          Row(
-                            children: [
-                              buildRatingStart(libraryItems.rating),
-                              Row(
-                                children: [
-                                  Text(
-                                    "(${libraryItems.rating})",
-                                    style: const TextStyle(
-                                        fontSize: 11, color: Colors.grey),
-                                  ),
-                                  const Text(
-                                    "Reviews",
-                                    style: TextStyle(
-                                        fontSize: 11,
-                                        color: Colors.grey,
-                                        fontFamily: 'Montserrat'),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ],
+                  ReviewPage(
+                      type: widget.libraryItems.type,
+                      slug: widget.libraryItems.slug,
+                      rating: widget.libraryItems.rating,
                       ),
-                    ),
-                    collapsed: const Text(
-                      '',
-                      softWrap: true,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    expanded: ReviewPage(
-                        type: widget.libraryItems.type,
-                        slug: widget.libraryItems.slug),
-                  ),
 
                   // related Product Heading
                   RelatedProductTitle(),

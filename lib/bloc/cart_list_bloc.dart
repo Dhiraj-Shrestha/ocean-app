@@ -12,9 +12,13 @@ class CartListBloc extends BlocBase {
 
   String email;
 
+ 
+
   addUserEmail(String userEmail) {
     email = userEmail;
   }
+
+
 
   //  output
   Stream<List<LibraryItems>> get listStream => _listController.stream;
