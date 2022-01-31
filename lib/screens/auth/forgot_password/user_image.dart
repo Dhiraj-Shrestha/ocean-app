@@ -251,8 +251,6 @@ class _ProfilePicState extends State<ProfilePic> {
       setState(() {
         _imageFile = pickedFile;
         _saveImage();
-
-        print(_imageFile);
       });
     } catch (e) {
       setState(() {

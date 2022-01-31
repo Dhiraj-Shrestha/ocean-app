@@ -1,6 +1,5 @@
 // ignore_for_file: avoid_print
 import 'dart:convert';
-import 'dart:developer' as developer;
 import 'package:badges/badges.dart';
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter/material.dart';

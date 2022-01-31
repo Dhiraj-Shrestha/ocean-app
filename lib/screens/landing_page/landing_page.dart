@@ -22,7 +22,6 @@ import 'package:ocean_publication/screens/home/homepage.dart';
 import 'package:ocean_publication/screens/search/search_item.dart';
 import 'package:ocean_publication/screens/training_seminars/training_seminar.dart';
 import 'package:ocean_publication/screens/videos/video_page.dart';
-import 'dart:developer' as developer;
 import 'package:intl/intl.dart';
 import 'package:badges/badges.dart';
 import 'package:shared_preferences/shared_preferences.dart';

@@ -2,8 +2,6 @@
 
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-// import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:ocean_publication/api/api.dart';
 import 'package:ocean_publication/constants/app_colors.dart';
 import 'package:ocean_publication/models/products/api_data.dart';
@@ -74,28 +72,15 @@ class _UserAllCourses extends State<UserAllCourses> {
       ),
       body: loading
           ? Center(child: circularProgressIndicator())
-          : StaggeredGridView.countBuilder(
-              crossAxisCount: 3,
-              crossAxisSpacing: 5.0,
-              mainAxisSpacing: 7,
+          : GridView.builder(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3, childAspectRatio: 3 / 7.2),
               itemCount: _listOfUserCourses.length,
-              itemBuilder: (context, index) {
+              itemBuilder: (BuildContext ctx, index) {
                 final courseItem = _listOfUserCourses[index];
                 return AllCourseCardItem(allCourseItem: courseItem);
               },
-              staggeredTileBuilder: (int index) {
-                return const StaggeredTile.count(1, 2.1);
-              },
             ),
-      // : GridView.builder(
-      //     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-      //         crossAxisCount: 3, childAspectRatio: 3 / 7.2),
-      //     itemCount: _listOfUserCourses.length,
-      //     itemBuilder: (BuildContext ctx, index) {
-      //       final courseItem = _listOfUserCourses[index];
-      //       return AllCourseCardItem(allCourseItem: courseItem);
-      //     },
-      //   ),
     );
   }
 }
