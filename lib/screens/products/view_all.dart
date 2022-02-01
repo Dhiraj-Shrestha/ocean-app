@@ -218,7 +218,7 @@ class _BookViewAllState extends State<BookViewAll> {
                   shrinkWrap: true,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 3,
-                    childAspectRatio: 3 / 6.7,
+                    childAspectRatio: 3 / 6.8,
                   ),
                   itemCount: _listOfAllBooks.length,
                   itemBuilder: (BuildContext ctx, index) {

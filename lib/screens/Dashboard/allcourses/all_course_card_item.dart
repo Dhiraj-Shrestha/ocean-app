@@ -24,9 +24,10 @@ class AllCourseCardItem extends StatefulWidget {
   final LibraryItems allCourseItem;
 
   // ignore: prefer_const_constructors_in_immutables
-  AllCourseCardItem(
-      {Key key, @required this.allCourseItem,})
-      : super(key: key);
+  AllCourseCardItem({
+    Key key,
+    @required this.allCourseItem,
+  }) : super(key: key);
 
   @override
   _AllCourseCardItemState createState() => _AllCourseCardItemState();
@@ -86,8 +87,6 @@ class _AllCourseCardItemState extends State<AllCourseCardItem> {
     }
   }
 
-
-
   showToast(msg) {
     Widget toast = Container(
       padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
@@ -120,6 +119,7 @@ class _AllCourseCardItemState extends State<AllCourseCardItem> {
   void _showRatingAppDialog() {
     final _ratingDialog = RatingDialog(
       initialRating: 1,
+      starSize: 20.0,
       starColor: Colors.amber,
       title: Text('Rating and review', style: headingStyle),
       message: Text(

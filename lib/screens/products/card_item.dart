@@ -204,32 +204,7 @@ class _CardItemState extends State<CardItem> {
                   // Padding(
                   //     padding: const EdgeInsets.only(top: 4, left: 5, right: 5),
                   //     child: buildRatingStart(5)),
-                  Row(
-                    children: [
-                      Padding(
-                        padding:
-                            const EdgeInsets.only(left: 5, top: 4, right: 4),
-                        child: Text(
-                          "(${book.rating})",
-                          style:
-                              const TextStyle(fontSize: 11, color: Colors.grey),
-                        ),
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.only(
-                          top: 4,
-                          right: 5,
-                        ),
-                        child: Text(
-                          "Reviews",
-                          style: TextStyle(
-                              fontSize: 11,
-                              color: Colors.grey,
-                              fontFamily: 'Montserrat'),
-                        ),
-                      ),
-                    ],
-                  ),
+
                   Padding(
                     padding: const EdgeInsets.only(
                       left: 5.0,

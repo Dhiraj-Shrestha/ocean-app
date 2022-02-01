@@ -87,7 +87,7 @@ class _HomePageState extends State<VideoPage> {
       },
       child: GridView.builder(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3, childAspectRatio: 3 / 6.5),
+            crossAxisCount: 3, childAspectRatio: 3 / 6.8),
         itemCount: _listOfVidoes.length,
         itemBuilder: (BuildContext ctx, index) {
           final book = _listOfVidoes[index];
