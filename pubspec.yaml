@@ -46,6 +46,7 @@ dependencies:
   bloc_pattern: ^3.0.0
   rxdart: ^0.27.3
   dio: ^4.0.4
+  shimmer: ^2.0.0
   flutter_icons: ^1.1.0
   readmore: ^2.1.0
   flutter_html:

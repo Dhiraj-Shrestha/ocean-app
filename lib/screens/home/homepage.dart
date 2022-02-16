@@ -14,6 +14,7 @@ import 'package:ocean_publication/screens/category/category.dart';
 import 'package:ocean_publication/screens/products/heading.dart';
 import 'package:ocean_publication/screens/products/list.dart';
 import 'package:ocean_publication/widgets/circular_progress_indicator.dart';
+import 'package:shimmer/shimmer.dart';
 
 class HomePage extends StatefulWidget {
   // ignore: prefer_const_constructors_in_immutables
@@ -133,7 +134,45 @@ class _HomePageState extends State<HomePage> {
           SizedBox(
             height: 200.0,
             child: loading
-                ? Center(child: circularProgressIndicator())
+                ? Shimmer.fromColors(
+                    baseColor: Colors.grey.shade400,
+                    period: const Duration(milliseconds: 500),
+                    highlightColor: Colors.grey.shade300,
+                    child: ListTile(
+                      title: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Container(
+                          height: 14,
+                          width: MediaQuery.of(context).size.width / 3,
+                          decoration: BoxDecoration(
+                            color: Colors.grey,
+                            borderRadius: BorderRadius.circular(2),
+                          ),
+                        ),
+                      ),
+                      subtitle: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Container(
+                          height: 14,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            color: Colors.grey,
+                            borderRadius: BorderRadius.circular(2),
+                          ),
+                        ),
+                      ),
+                      leading: Container(
+                        height: 50,
+                        width: 50,
+                        padding: const EdgeInsets.all(15),
+                        decoration: BoxDecoration(
+                          color: Colors.grey,
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                      ),
+                    ),
+                  )
+                // Center(child: circularProgressIndicator())
                 : Carousel(
                     boxFit: BoxFit.cover,
                     images: _listBanners,
